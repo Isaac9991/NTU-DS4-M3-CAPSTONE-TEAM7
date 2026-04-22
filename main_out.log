@@ -1,0 +1,32 @@
+Loading data...
+/home/hoa_im_eng/NTU-DS4-M3-CAPSTONE-TEAM7-2/src/data.py:17: DtypeWarning: Columns (41) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(file_path)
+/home/hoa_im_eng/NTU-DS4-M3-CAPSTONE-TEAM7-2/src/data.py:17: DtypeWarning: Columns (40) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(file_path)
+Train set shape: (150634, 77)
+Test set shape: (16737, 76)
+Preprocessing data...
+Starting 5-Fold Stratified CV with LightGBM...
+--- Fold 1 ---
+Traceback (most recent call last):
+  File "/home/hoa_im_eng/NTU-DS4-M3-CAPSTONE-TEAM7-2/src/main.py", line 44, in <module>
+    main()
+    ~~~~^^
+  File "/home/hoa_im_eng/NTU-DS4-M3-CAPSTONE-TEAM7-2/src/main.py", line 33, in main
+    oof_df, submission_df = run_cv_pipeline(X_train, y_train, X_test, test_ids, n_splits=5, seed=42)
+                            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hoa_im_eng/NTU-DS4-M3-CAPSTONE-TEAM7-2/src/validation.py", line 58, in run_cv_pipeline
+    model.fit(X_tr, y_tr)
+    ~~~~~~~~~^^^^^^^^^^^^
+  File "/home/hoa_im_eng/miniconda3/lib/python3.13/site-packages/sklearn/base.py", line 1336, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/home/hoa_im_eng/miniconda3/lib/python3.13/site-packages/sklearn/ensemble/_hist_gradient_boosting/gradient_boosting.py", line 566, in fit
+    X, known_categories = self._preprocess_X(X, reset=True)
+                          ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/hoa_im_eng/miniconda3/lib/python3.13/site-packages/sklearn/ensemble/_hist_gradient_boosting/gradient_boosting.py", line 299, in _preprocess_X
+    known_categories = self._check_categories()
+  File "/home/hoa_im_eng/miniconda3/lib/python3.13/site-packages/sklearn/ensemble/_hist_gradient_boosting/gradient_boosting.py", line 348, in _check_categories
+    raise ValueError(
+    ...<3 lines>...
+    )
+ValueError: Categorical feature 'block' is expected to have a cardinality <= 255 but actually has a cardinality of 2506.

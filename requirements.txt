@@ -1,4 +1,4 @@
-Jupyter Notebook
+notebook
 pandas
 numpy
 seaborn

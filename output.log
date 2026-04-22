@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/home/hoa_im_eng/NTU-DS4-M3-CAPSTONE-TEAM7-2/src/main.py", line 6, in <module>
+    from validation import run_cv_pipeline
+  File "/home/hoa_im_eng/NTU-DS4-M3-CAPSTONE-TEAM7-2/src/validation.py", line 5, in <module>
+    import lightgbm as lgb
+ModuleNotFoundError: No module named 'lightgbm'
