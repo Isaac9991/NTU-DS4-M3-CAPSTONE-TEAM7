@@ -1,44 +1,83 @@
-import os
-import pandas as pd
-from pathlib import Path
 from data import load_data
-from feature_eng import preprocess_data
-from validation import run_cv_pipeline
+from feature_eng import SchoolFeature, feature_engineering_pipeline
+from preprocess import preprocess_data
+from models.xgboost import get_xgboost_model
+from models.lightgbm import get_lightgbm_model
+from encoding import TargetEncoder
+from train import train_model
+
+from collections import defaultdict
 
 def main():
+
+    #get data
     print("Loading data...")
-    train_df = load_data('data/train.csv')
-    test_df = load_data('data/test.csv')
-    
-    print(f"Train set shape: {train_df.shape}")
-    print(f"Test set shape: {test_df.shape}")
-    
+    train_df = load_data("data/train.csv")
+    test_df = load_data("data/test.csv")
+
+    #preprocess data
     print("Preprocessing data...")
-    # Get IDs for test set
-    if 'id' in test_df.columns:
-        test_ids = test_df['id'].values
-    else:
-        test_ids = range(len(test_df))
-        
-    X_train, y_train = preprocess_data(train_df, is_train=True)
-    X_test, _ = preprocess_data(test_df, is_train=False)
+    train_df = preprocess_data(train_df)
+    test_df = preprocess_data(test_df)
+
+    print("Feature engineering...")
+
+    school_fe = SchoolFeature()
+
+    # fit only on train
+    school_fe.fit(train_df)
+
+    # feature engineering
+    train_df = feature_engineering_pipeline(train_df, school_fe)
+    test_df = feature_engineering_pipeline(test_df, school_fe)
+
+    #encoding: target encoding first, then label encoding for remaining categoricals
+
+    print("Target encoding...")
+
+    cols_to_encode = [
+        "town",
+        "flat_model",
+        "planning_area",
+        "mrt_name"
+    ]
+
+    te = TargetEncoder(cols=cols_to_encode)
+
+    train_df = te.fit_transform(train_df, target="resale_price")
+    test_df = te.transform(test_df)
+
+    # drop original categorical columns
+
+    print("Cleaning remaining object columns...")
+
+    train_df = train_df.drop(columns=train_df.select_dtypes(include=["object"]).columns)
+    test_df = test_df.drop(columns=test_df.select_dtypes(include=["object"]).columns)
+
+
+    #get model
+    models = {
+        "xgboost": get_xgboost_model()
+        # "lightgbm": get_lightgbm_model()
+        }
     
-    # Align train and test columns
-    missing_cols = set(X_train.columns) - set(X_test.columns)
-    for c in missing_cols:
-        X_test[c] = 0
-    X_test = X_test[X_train.columns]
+    results = {}
+    trained_models = {}
+
+    #train model
+    print("Training model...")
+    for name, model in models.items():
+
+        print(f"Training {name} model...")
+
+        trained_model, rmse = train_model(train_df, model)
+
+        trained_models[name] = trained_model
+        results[name] = rmse
+
+        print(f"{name} RMSE: {rmse:.4f}")
+
     
-    # Run validation pipeline
-    oof_df, submission_df = run_cv_pipeline(X_train, y_train, X_test, test_ids, n_splits=5, seed=42)
-    
-    print("\nExporting predictions...")
-    output_dir = Path(__file__).parent.parent / 'output'
-    os.makedirs(output_dir, exist_ok=True)
-    
-    oof_df.to_csv(output_dir / 'oof_predictions.csv', index=False)
-    submission_df.to_csv(output_dir / 'submission.csv', index=False)
-    print(f"Predictions saved to {output_dir}")
-    
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
