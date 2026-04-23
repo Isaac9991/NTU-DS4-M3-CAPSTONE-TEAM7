@@ -17,7 +17,14 @@ def preprocess_data(df):
         "bus_stop_latitude",
         "street_name",
         "longitude",
-        "latitude"
+        "latitude",
+        "address",
+        "full_flat_type",
+        "residential",
+        "internal_organization",
+        "market_hawker",
+        "precinct_pavilion",
+        "storey_range"
     ]
 
     df = df.drop(columns=columns_to_drop, errors="ignore")

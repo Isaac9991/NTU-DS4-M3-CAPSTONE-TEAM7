@@ -4,15 +4,6 @@ from sklearn.preprocessing import StandardScaler
 
 #TODO: add more features here
 
-# def add_time_features(df):
-#     df = df.copy()
-
-#     df["Tranc_YearMonth"] = pd.to_datetime(df["Tranc_YearMonth"])
-#     df["year"] = df["Tranc_YearMonth"].dt.year
-#     df["month"] = df["Tranc_YearMonth"].dt.month
-
-#     return df.drop(columns=["Tranc_YearMonth"])
-
 def add_amenity_scores(df):
     df = df.copy()
 

@@ -11,8 +11,7 @@ class TargetEncoder:
     def fit_transform(self, train_df, target):
 
         train_df = train_df.copy()
-
-        # 🔥 AUTO-DETECT if cols not provided
+        
         if self.cols is None:
             self.cols = train_df.select_dtypes(include=["object"]).columns.tolist()
 
