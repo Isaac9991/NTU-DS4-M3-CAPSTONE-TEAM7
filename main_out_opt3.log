@@ -1,0 +1,50 @@
+/home/hoa_im_eng/NTU-DS4-M3-CAPSTONE-TEAM7-2/src/validation.py:59: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+  mean_target = y_tr.groupby(X_tr[col]).mean()
+/home/hoa_im_eng/NTU-DS4-M3-CAPSTONE-TEAM7-2/src/validation.py:59: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+  mean_target = y_tr.groupby(X_tr[col]).mean()
+/home/hoa_im_eng/NTU-DS4-M3-CAPSTONE-TEAM7-2/src/validation.py:59: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+  mean_target = y_tr.groupby(X_tr[col]).mean()
+/home/hoa_im_eng/NTU-DS4-M3-CAPSTONE-TEAM7-2/src/validation.py:59: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+  mean_target = y_tr.groupby(X_tr[col]).mean()
+/home/hoa_im_eng/NTU-DS4-M3-CAPSTONE-TEAM7-2/src/validation.py:59: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+  mean_target = y_tr.groupby(X_tr[col]).mean()
+/home/hoa_im_eng/NTU-DS4-M3-CAPSTONE-TEAM7-2/src/validation.py:59: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+  mean_target = y_tr.groupby(X_tr[col]).mean()
+/home/hoa_im_eng/NTU-DS4-M3-CAPSTONE-TEAM7-2/src/validation.py:59: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+  mean_target = y_tr.groupby(X_tr[col]).mean()
+/home/hoa_im_eng/NTU-DS4-M3-CAPSTONE-TEAM7-2/src/validation.py:59: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+  mean_target = y_tr.groupby(X_tr[col]).mean()
+/home/hoa_im_eng/NTU-DS4-M3-CAPSTONE-TEAM7-2/src/validation.py:59: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+  mean_target = y_tr.groupby(X_tr[col]).mean()
+/home/hoa_im_eng/NTU-DS4-M3-CAPSTONE-TEAM7-2/src/validation.py:59: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+  mean_target = y_tr.groupby(X_tr[col]).mean()
+/home/hoa_im_eng/NTU-DS4-M3-CAPSTONE-TEAM7-2/src/validation.py:59: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+  mean_target = y_tr.groupby(X_tr[col]).mean()
+/home/hoa_im_eng/NTU-DS4-M3-CAPSTONE-TEAM7-2/src/validation.py:59: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+  mean_target = y_tr.groupby(X_tr[col]).mean()
+/home/hoa_im_eng/NTU-DS4-M3-CAPSTONE-TEAM7-2/src/validation.py:59: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+  mean_target = y_tr.groupby(X_tr[col]).mean()
+/home/hoa_im_eng/NTU-DS4-M3-CAPSTONE-TEAM7-2/src/validation.py:59: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+  mean_target = y_tr.groupby(X_tr[col]).mean()
+/home/hoa_im_eng/NTU-DS4-M3-CAPSTONE-TEAM7-2/src/validation.py:59: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+  mean_target = y_tr.groupby(X_tr[col]).mean()
+Loading data...
+Train set shape: (150634, 77)
+Test set shape: (16737, 76)
+Preprocessing data...
+Starting 5-Fold Stratified CV with LightGBM...
+--- Fold 1 ---
+Fold 1 RMSE: 24406.87
+--- Fold 2 ---
+Fold 2 RMSE: 23656.28
+--- Fold 3 ---
+Fold 3 RMSE: 23899.26
+--- Fold 4 ---
+Fold 4 RMSE: 24022.36
+--- Fold 5 ---
+Fold 5 RMSE: 23520.64
+
+Mean CV RMSE: 23901.08 +/- 308.28
+
+Exporting predictions...
+Predictions saved to /home/hoa_im_eng/NTU-DS4-M3-CAPSTONE-TEAM7-2/output

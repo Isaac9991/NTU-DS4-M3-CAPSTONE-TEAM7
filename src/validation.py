@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import StratifiedKFold
 from sklearn.metrics import mean_squared_error
-from sklearn.ensemble import HistGradientBoostingRegressor
+from catboost import CatBoostRegressor
 import os
 
 def generate_bins(target, num_bins=10):
@@ -14,10 +14,10 @@ def generate_bins(target, num_bins=10):
 
 def run_cv_pipeline(X_train, y_train, X_test, test_ids, n_splits=5, seed=42):
     """
-    Runs a robust Stratified K-Fold CV using LightGBM.
+    Runs a robust Stratified K-Fold CV using CatBoostRegressor.
     Returns the OOF predictions and Test predictions.
     """
-    print(f"Starting {n_splits}-Fold Stratified CV with LightGBM...")
+    print(f"Starting {n_splits}-Fold Stratified CV with CatBoostRegressor...")
     
     # 1. Generate Stratified Bins for regression target
     bins = generate_bins(y_train, num_bins=10)
@@ -28,19 +28,18 @@ def run_cv_pipeline(X_train, y_train, X_test, test_ids, n_splits=5, seed=42):
     
     cv_scores = []
     
-    # Identify categorical columns
-    cat_cols = X_train.select_dtypes(include=['category']).columns.tolist()
+    # Identify categorical columns (strings)
+    cat_cols = X_train.select_dtypes(include=['object', 'category']).columns.tolist()
     
-    # HistGradientBoostingRegressor Parameters
+    # CatBoostRegressor Parameters
     model_params = {
-        'loss': 'squared_error',
+        'loss_function': 'RMSE',
         'learning_rate': 0.05,
-        'max_leaf_nodes': 31,
-        'max_depth': None,
-        'random_state': seed,
-        'max_iter': 500,
-        'early_stopping': True,
-        'n_iter_no_change': 10
+        'depth': 8,
+        'iterations': 3000,
+        'random_seed': seed,
+        'early_stopping_rounds': 50,
+        'verbose': 100
     }
     
     for fold, (train_idx, val_idx) in enumerate(skf.split(X_train, bins)):
@@ -49,13 +48,13 @@ def run_cv_pipeline(X_train, y_train, X_test, test_ids, n_splits=5, seed=42):
         X_tr, y_tr = X_train.iloc[train_idx], y_train.iloc[train_idx]
         X_va, y_va = X_train.iloc[val_idx], y_train.iloc[val_idx]
         
-        # HistGradientBoostingRegressor requires explicitly setting categorical features
-        # It takes indices or a boolean mask
-        cat_features_mask = [col in cat_cols for col in X_train.columns]
-        model = HistGradientBoostingRegressor(**model_params, categorical_features=cat_features_mask)
+        model = CatBoostRegressor(**model_params)
         
-        # Fit model
-        model.fit(X_tr, y_tr)
+        # Fit model with cat_features
+        model.fit(X_tr, y_tr, 
+                  cat_features=cat_cols,
+                  eval_set=(X_va, y_va),
+                  use_best_model=True)
         
         # Get predictions
         v_preds = model.predict(X_va)

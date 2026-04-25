@@ -1,0 +1,20 @@
+Loading data...
+Train set shape: (150634, 77)
+Test set shape: (16737, 76)
+Preprocessing data...
+Starting 5-Fold Stratified CV with LightGBM...
+--- Fold 1 ---
+Fold 1 RMSE: 22644.33
+--- Fold 2 ---
+Fold 2 RMSE: 22321.25
+--- Fold 3 ---
+Fold 3 RMSE: 22489.50
+--- Fold 4 ---
+Fold 4 RMSE: 22367.19
+--- Fold 5 ---
+Fold 5 RMSE: 22497.38
+
+Mean CV RMSE: 22463.93 +/- 113.17
+
+Exporting predictions...
+Predictions saved to /home/hoa_im_eng/NTU-DS4-M3-CAPSTONE-TEAM7-2/output

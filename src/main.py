@@ -3,6 +3,7 @@ import pandas as pd
 from pathlib import Path
 from data import load_data
 from feature_eng import preprocess_data
+from feature_eng_location import add_location_features
 from validation import run_cv_pipeline
 
 def main():
@@ -12,6 +13,9 @@ def main():
     
     print(f"Train set shape: {train_df.shape}")
     print(f"Test set shape: {test_df.shape}")
+    
+    print("Adding advanced location features...")
+    train_df, test_df, new_cols = add_location_features(train_df, test_df)
     
     print("Preprocessing data...")
     # Get IDs for test set

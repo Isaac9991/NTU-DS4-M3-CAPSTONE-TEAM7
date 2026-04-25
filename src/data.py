@@ -14,6 +14,6 @@ def load_data(file_path):
     BASE_DIR = Path(__file__).parent.parent
     file_path = BASE_DIR / file_path
 
-    df = pd.read_csv(file_path)
+    df = pd.read_csv(file_path, low_memory=False)
 
     return df

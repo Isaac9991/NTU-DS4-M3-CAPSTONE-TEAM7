@@ -1,0 +1,20 @@
+Loading data...
+Train set shape: (150634, 77)
+Test set shape: (16737, 76)
+Preprocessing data...
+Starting 5-Fold Stratified CV with HistGradientBoostingRegressor...
+--- Fold 1 ---
+Fold 1 RMSE: 22398.50
+--- Fold 2 ---
+Fold 2 RMSE: 22050.34
+--- Fold 3 ---
+Fold 3 RMSE: 22178.71
+--- Fold 4 ---
+Fold 4 RMSE: 22078.29
+--- Fold 5 ---
+Fold 5 RMSE: 22152.25
+
+Mean CV RMSE: 22171.62 +/- 122.74
+
+Exporting predictions...
+Predictions saved to /home/hoa_im_eng/NTU-DS4-M3-CAPSTONE-TEAM7-2/output

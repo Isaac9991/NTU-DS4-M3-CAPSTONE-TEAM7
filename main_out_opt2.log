@@ -1,0 +1,49 @@
+/home/hoa_im_eng/NTU-DS4-M3-CAPSTONE-TEAM7-2/src/validation.py:59: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+  mean_target = y_tr.groupby(X_tr[col]).mean()
+/home/hoa_im_eng/NTU-DS4-M3-CAPSTONE-TEAM7-2/src/validation.py:59: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+  mean_target = y_tr.groupby(X_tr[col]).mean()
+Loading data...
+Train set shape: (150634, 77)
+Test set shape: (16737, 76)
+Preprocessing data...
+Starting 5-Fold Stratified CV with LightGBM...
+--- Fold 1 ---
+Traceback (most recent call last):
+  File "/home/hoa_im_eng/NTU-DS4-M3-CAPSTONE-TEAM7-2/src/main.py", line 44, in <module>
+    main()
+    ~~~~^^
+  File "/home/hoa_im_eng/NTU-DS4-M3-CAPSTONE-TEAM7-2/src/main.py", line 33, in main
+    oof_df, submission_df = run_cv_pipeline(X_train, y_train, X_test, test_ids, n_splits=5, seed=42)
+                            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hoa_im_eng/NTU-DS4-M3-CAPSTONE-TEAM7-2/src/validation.py", line 63, in run_cv_pipeline
+    X_tr[col + '_TE'] = X_tr[col].map(mean_target).fillna(global_mean)
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/hoa_im_eng/miniconda3/lib/python3.13/site-packages/pandas/core/generic.py", line 7372, in fillna
+    new_data = self._mgr.fillna(
+        value=value, limit=limit, inplace=inplace, downcast=downcast
+    )
+  File "/home/hoa_im_eng/miniconda3/lib/python3.13/site-packages/pandas/core/internals/base.py", line 186, in fillna
+    return self.apply_with_block(
+           ~~~~~~~~~~~~~~~~~~~~~^
+        "fillna",
+        ^^^^^^^^^
+    ...<5 lines>...
+        already_warned=_AlreadyWarned(),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/hoa_im_eng/miniconda3/lib/python3.13/site-packages/pandas/core/internals/managers.py", line 363, in apply
+    applied = getattr(b, f)(**kwargs)
+  File "/home/hoa_im_eng/miniconda3/lib/python3.13/site-packages/pandas/core/internals/blocks.py", line 2407, in fillna
+    new_values = self.values.fillna(value=value, method=None, limit=limit)
+  File "/home/hoa_im_eng/miniconda3/lib/python3.13/site-packages/pandas/core/arrays/_mixins.py", line 376, in fillna
+    self._validate_setitem_value(value)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/home/hoa_im_eng/miniconda3/lib/python3.13/site-packages/pandas/core/arrays/categorical.py", line 1590, in _validate_setitem_value
+    return self._validate_scalar(value)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/home/hoa_im_eng/miniconda3/lib/python3.13/site-packages/pandas/core/arrays/categorical.py", line 1615, in _validate_scalar
+    raise TypeError(
+    ...<2 lines>...
+    ) from None
+TypeError: Cannot setitem on a Categorical with a new category (449088.002724655), set the categories first
