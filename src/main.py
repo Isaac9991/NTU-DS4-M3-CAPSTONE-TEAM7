@@ -1,5 +1,5 @@
 from data import load_data
-from feature_eng import SchoolFeature, feature_engineering_pipeline
+from feature_eng import SchoolFeature, feature_engineering_pipeline, preprocess as feature_preprocess
 from preprocess import preprocess_data
 from models.xgboost import get_xgboost_model
 from models.lightgbm import get_lightgbm_model
@@ -19,6 +19,10 @@ def main():
     print("Preprocessing data...")
     train_df = preprocess_data(train_df)
     test_df = preprocess_data(test_df)
+
+    print("Feature preprocessing...")
+    train_df = feature_preprocess(train_df)
+    test_df = feature_preprocess(test_df)
 
     print("Feature engineering...")
 

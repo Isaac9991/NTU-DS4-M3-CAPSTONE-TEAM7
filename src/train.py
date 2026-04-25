@@ -6,14 +6,12 @@ from sklearn.metrics import mean_squared_error, r2_score
 
 def train_model(df, model):
     """
-    Train xgboost regression model and lightgbm regression model on the training data.
+    Train xgboost regression model on the training data.
 
     """
     X = df.drop(columns=["resale_price"])
     Y = np.log1p(df["resale_price"])
     X_train, X_val, Y_train, Y_val = train_test_split(X, Y, test_size=0.2, random_state=42)
-
-    model = get_xgboost_model()
 
     #train model
     model.fit(X_train, Y_train, eval_set=[(X_val, Y_val)], verbose=False)
