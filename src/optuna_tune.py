@@ -7,35 +7,35 @@ from sklearn.metrics import mean_squared_error
 
 from data import load_data
 from feature_eng import preprocess_data
+from feature_eng_location import add_location_features
 from validation import generate_bins
 
+# Load data once outside the objective for speed
+print("Loading and preprocessing data for tuning...")
+train_df = load_data('data/train.csv')
+train_df, _ = add_location_features(train_df, None)
+X_train, y_train = preprocess_data(train_df, is_train=True)
+
+# Identify categorical columns
+cat_cols = X_train.select_dtypes(include=['object', 'category']).columns.tolist()
+bins = generate_bins(y_train, num_bins=10)
+
 def objective(trial):
-    print(f"Starting Trial {trial.number}...")
-    
-    # Load data
-    train_df = load_data('data/train.csv')
-    X_train, y_train = preprocess_data(train_df, is_train=True)
-    
-    # Identify categorical columns
-    cat_cols = X_train.select_dtypes(include=['object', 'category']).columns.tolist()
-    
     # Parameter search space
     params = {
         'loss_function': 'RMSE',
-        'iterations': 1500, # Kept lower for tuning speed
-        'learning_rate': trial.suggest_float('learning_rate', 0.01, 0.2, log=True),
-        'depth': trial.suggest_int('depth', 4, 10),
-        'l2_leaf_reg': trial.suggest_float('l2_leaf_reg', 1e-1, 10.0, log=True),
+        'iterations': 1000, # Kept moderate for tuning speed
+        'learning_rate': trial.suggest_float('learning_rate', 0.01, 0.1, log=True),
+        'depth': trial.suggest_int('depth', 6, 10),
+        'l2_leaf_reg': trial.suggest_float('l2_leaf_reg', 1.0, 10.0, log=True),
         'random_seed': 42,
         'early_stopping_rounds': 50,
-        'verbose': 0
+        'verbose': 0,
+        'task_type': 'CPU' # Set to 'GPU' if available
     }
     
-    # Fast validation (3 folds instead of 5 for tuning)
-    n_splits = 3
-    bins = generate_bins(y_train, num_bins=10)
-    skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=42)
-    
+    # 3-fold CV for faster tuning
+    skf = StratifiedKFold(n_splits=3, shuffle=True, random_state=42)
     cv_scores = []
     
     for fold, (train_idx, val_idx) in enumerate(skf.split(X_train, bins)):
@@ -53,16 +53,15 @@ def objective(trial):
         cv_scores.append(score)
         
     mean_rmse = np.mean(cv_scores)
-    print(f"Trial {trial.number} finished with RMSE: {mean_rmse:.2f}")
     return mean_rmse
 
 if __name__ == '__main__':
-    print("Starting Optuna Hyperparameter Optimization for CatBoost...")
+    print(f"Starting Optuna Hyperparameter Optimization for CatBoost with {X_train.shape[1]} features...")
     study = optuna.create_study(direction='minimize')
-    study.optimize(objective, n_trials=50, gc_after_trial=True)
+    study.optimize(objective, n_trials=30, gc_after_trial=True)
     
     print("\nOptimization Finished!")
-    print(f"Best trial value (RMSE): {study.best_value}")
+    print(f"Best trial value (RMSE): {study.best_value:.2f}")
     print("Best parameters:")
     for key, value in study.best_params.items():
         print(f"    {key}: {value}")

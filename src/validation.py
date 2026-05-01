@@ -31,14 +31,15 @@ def run_cv_pipeline(X_train, y_train, X_test, test_ids, n_splits=5, seed=42):
     # Identify categorical columns (strings)
     cat_cols = X_train.select_dtypes(include=['object', 'category']).columns.tolist()
     
-    # CatBoostRegressor Parameters
+    # Optimized CatBoostRegressor Parameters from Optuna
     model_params = {
         'loss_function': 'RMSE',
-        'learning_rate': 0.05,
-        'depth': 8,
-        'iterations': 3000,
+        'learning_rate': 0.0994,
+        'depth': 10,
+        'l2_leaf_reg': 1e-7,
+        'iterations': 5000,
         'random_seed': seed,
-        'early_stopping_rounds': 50,
+        'early_stopping_rounds': 100,
         'verbose': 100
     }
     
